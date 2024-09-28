@@ -1,0 +1,16 @@
+void MapViewer::on_findPathButton_clicked() {
+    int start = ui->startPointInput->text().toInt();
+    int end = ui->endPointInput->text().toInt();
+    QString algorithm = ui->algorithmComboBox->currentText();
+
+    std::list<int> path;
+    if (algorithm == "BFS") {
+        path = bfs(start, end);
+    } else if (algorithm == "Dijkstra") {
+        path = dijkstra(start, end);
+    } else if (algorithm == "A-Star") {
+        path = astar(start, end);
+    }
+
+    renderPath(path);
+}
