@@ -1,6 +1,5 @@
 # Graph Search Algorithms Project
 
-![Banner](Info/Assets/banner-2.png)
 ![Banner](Info/Assets/Banner-2.png)
 
 ## Overview
