@@ -1,6 +1,6 @@
 # Graph Search Algorithms Project
 
-![Banner](Info/Assets/banner-2.jpg)
+![Banner](Info/Assets/banner-2.png)
 
 ## Overview
 This project implements and visualizes various graph search algorithms, including Breadth-First Search (BFS), Dijkstra's algorithm, and A-Star (A*) algorithm. The project is built using Qt for the graphical user interface and C++ for the algorithm implementations.
