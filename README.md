@@ -84,9 +84,9 @@ Path: 1 2 INFO: path calculated in 95,871us Number of vertices in path: 2 Length
 
 
 ## Contributors
-- Name1
-- Name2
-- Name3
+- [LEROY Loïc](https://github.com/Loic-LEROY)
+- [MAUVOISIN Paul](https://github.com/Loic-LEROY)
+- [CAZAUBON Lorenz](https://github.com/Templatew)
 
 ## License
 This project is licensed under the MIT License. See the LICENSE file for details.
