@@ -19,7 +19,7 @@ This project implements and visualizes various graph search algorithms, includin
 ## Installation
 1. **Clone the repository**:
     ```sh
-    git clone https://github.com/yourusername/graph_search_algorithms.git
+    git clone https://github.com/Loic-LEROY/Ad-Astra.git
     cd graph_search_algorithms
     ```
 
