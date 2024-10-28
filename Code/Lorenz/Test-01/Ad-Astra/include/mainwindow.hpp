@@ -20,7 +20,6 @@ private slots:
     void selectEndVertex();
     void findPath();
     void selectAlgorithm();
-    void loadMap();
 
 
 private:
