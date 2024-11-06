@@ -8,4 +8,4 @@ public:
     std::vector<Vertex*> findPath(Vertex* start, Vertex* goal) override;
 };
 
-#endif // DIJKSTRAALGORITHM_HPP
+#endif

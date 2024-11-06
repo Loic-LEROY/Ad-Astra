@@ -3,6 +3,8 @@
 
 #include <QGraphicsLineItem>
 #include "Edge.hpp"
+#include <QPainter>
+#include <QStyleOptionGraphicsItem>
 
 class EdgeItem : public QGraphicsLineItem {
 public:

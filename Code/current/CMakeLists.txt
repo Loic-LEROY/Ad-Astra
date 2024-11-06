@@ -14,6 +14,7 @@ find_package(Qt6 REQUIRED COMPONENTS
     Core
     Gui
     Widgets
+    OpenGLWidgets
 )
 
 qt6_standard_project_setup()
@@ -36,6 +37,7 @@ target_link_libraries(Ad-Astra PRIVATE
     Qt6::Core
     Qt6::Gui
     Qt6::Widgets
+    Qt6::OpenGLWidgets
 )
 
 set_target_properties(Ad-Astra PROPERTIES

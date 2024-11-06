@@ -1,9 +1,9 @@
-#ifndef ASTARALGORITHM_HPP
-#define ASTARALGORITHM_HPP
+#ifndef DIJKSTRAALGORITHM_HPP
+#define DIJKSTRAALGORITHM_HPP
 
 #include "PathfindingAlgorithm.hpp"
 
-class AStarAlgorithm : public PathfindingAlgorithm {
+class DijkstraAlgorithm : public PathfindingAlgorithm {
 public:
     std::vector<Vertex*> findPath(Vertex* start, Vertex* goal) override;
 };

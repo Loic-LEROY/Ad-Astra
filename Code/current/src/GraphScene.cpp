@@ -2,9 +2,8 @@
 #include "EdgeItem.hpp"
 #include <QGraphicsSceneMouseEvent>
 
-GraphScene::GraphScene(QObject* parent)
-    : QGraphicsScene(parent), graph(nullptr), startVertex(nullptr), endVertex(nullptr), startVertexLabel(nullptr),
-    endVertexLabel(nullptr) {}
+GraphScene::GraphScene(QObject* parent) : QGraphicsScene(parent), graph(nullptr), startVertex(nullptr), endVertex(nullptr), startVertexLabel(nullptr), endVertexLabel(nullptr) {
+}
 
 void GraphScene::setGraph(Graph* graph) {
     this->graph = graph;
@@ -60,15 +59,9 @@ void GraphScene::drawGraph() {
 
         VertexItem* vertexItem = new VertexItem(v);
         addItem(vertexItem);
-        vertexItem->setZValue(2);
         vertexItems[v] = vertexItem;
 
         connect(vertexItem, &VertexItem::vertexClicked, this, &GraphScene::vertexSelected);
-
-        // Optional: Display vertex ID
-        // QGraphicsTextItem* textItem = addText(QString::number(v->id));
-        // textItem->setPos(x + 4, y + 4);
-        // textItem->setDefaultTextColor(Qt::blue);
     }
 
     // Draw edges
@@ -81,76 +74,42 @@ void GraphScene::drawGraph() {
 }
 
 void GraphScene::setStartVertex(Vertex* vertex) {
+
+    // Reset Selection
     if (startVertex && vertexItems.count(startVertex)) {
         if (startVertex != vertex) {
             vertexItems[startVertex]->setState(VertexItem::Normal);
             vertexItems[endVertex]->setState(VertexItem::Normal);
-
-            if (startVertexLabel) {
-                removeItem(startVertexLabel);
-                delete startVertexLabel;
-                startVertexLabel = nullptr;
-
-                removeItem(endVertexLabel);
-                delete endVertexLabel;
-                endVertexLabel = nullptr;
-            }
         }
     }
+
+    // Set new start vertex
     startVertex = vertex;
     if (vertexItems.count(vertex)) {
         vertexItems[vertex]->setState(VertexItem::Start);
-
-        // Add label for start vertex
-        if (startVertexLabel) {
-
-            removeItem(startVertexLabel);
-            delete startVertexLabel;
-        }
-        startVertexLabel = addText(QString::number(vertex->id));
-        startVertexLabel->setZValue(20);
-        startVertexLabel->setDefaultTextColor(Qt::green);
-        startVertexLabel->setPos(vertex->x + 5, vertex->y - 15);
     }
 }
 
 void GraphScene::setEndVertex(Vertex* vertex) {
+
+    // Set new end vertex
     endVertex = vertex;
     if (vertexItems.count(vertex)) {
         vertexItems[vertex]->setState(VertexItem::End);
-
-        // Add label for end vertex
-        if (endVertexLabel) {
-            removeItem(endVertexLabel);
-            delete endVertexLabel;
-        }
-        endVertexLabel = addText(QString::number(vertex->id));
-        endVertexLabel->setZValue(20);
-        endVertexLabel->setDefaultTextColor(Qt::red);
-        endVertexLabel->setPos(vertex->x + 5, vertex->y - 15);
     }
 }
 
 void GraphScene::clearSelection() {
+
     // Reset start vertex
     if (startVertex && vertexItems.count(startVertex)) {
         vertexItems[startVertex]->setState(VertexItem::Normal);
-    }
-    if (startVertexLabel) {
-        removeItem(startVertexLabel);
-        delete startVertexLabel;
-        startVertexLabel = nullptr;
     }
     startVertex = nullptr;
 
     // Reset end vertex
     if (endVertex && vertexItems.count(endVertex)) {
         vertexItems[endVertex]->setState(VertexItem::Normal);
-    }
-    if (endVertexLabel) {
-        removeItem(endVertexLabel);
-        delete endVertexLabel;
-        endVertexLabel = nullptr;
     }
     endVertex = nullptr;
 
@@ -176,7 +135,7 @@ void GraphScene::highlightPath(const std::vector<Vertex*>& path) {
         if (edge) {
             EdgeItem* edgeItem = edgeItems[edge];
             if (edgeItem) {
-                edgeItem->setPen(QPen(Qt::blue, 2));
+                edgeItem->setPen(QPen(QColor(0xF72585), 3));
                 highlightedItems.push_back(edgeItem);
                 edgeItem->setZValue(10);
             }
@@ -209,7 +168,6 @@ void GraphScene::clearPathHighlight() {
         if (vertexItem) {
             if (vertexItem->getState() == VertexItem::Path) {
                 vertexItem->setState(VertexItem::Normal);
-                vertexItem->setZValue(2);
             }
         }
     }

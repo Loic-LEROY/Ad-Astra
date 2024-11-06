@@ -37,16 +37,22 @@ void MainWindow::setupUi() {
     // Create menu actions
     QAction* selectAlgorithmAction = new QAction("Select Algorithm", this);
     QAction* enterVertexIDsAction = new QAction("Enter Vertex IDs", this);
+    QAction* toggleAntialiasingAction = new QAction("Toggle Antialiasing", this);
     QAction* resetAction = new QAction("Reset", this);
+
+    toggleAntialiasingAction->setCheckable(true);
+    toggleAntialiasingAction->setChecked(true);
 
     connect(selectAlgorithmAction, &QAction::triggered, this, &MainWindow::selectAlgorithm);
     connect(enterVertexIDsAction, &QAction::triggered, this, &MainWindow::enterVertexIDs);
+    connect(toggleAntialiasingAction, &QAction::toggled, this, &MainWindow::toggleAntialiasing);
     connect(resetAction, &QAction::triggered, this, &MainWindow::resetSelection);
 
     // Add actions to the menu
     QMenu* menu = menuBar()->addMenu("Options");
     menu->addAction(selectAlgorithmAction);
     menu->addAction(enterVertexIDsAction);
+    menu->addAction(toggleAntialiasingAction);
     menu->addAction(resetAction);
 }
 
@@ -57,6 +63,19 @@ void MainWindow::loadGraph() {
         return;
     }
     graphScene->setGraph(&graph);
+}
+
+void MainWindow::toggleAntialiasing(bool enabled) {
+    if (enabled) {
+        graphicsView->setRenderHint(QPainter::Antialiasing, true);
+        statusBar()->showMessage("Antialiasing enabled.");
+    } else {
+        graphicsView->setRenderHint(QPainter::Antialiasing, false);
+        statusBar()->showMessage("Antialiasing disabled.");
+    }
+
+    // Force the view to update
+    graphicsView->viewport()->update();
 }
 
 void MainWindow::selectAlgorithm() {
@@ -82,7 +101,7 @@ void MainWindow::onVertexSelected(Vertex* vertex) {
         startVertex = vertex;
         graphScene->setStartVertex(vertex);
         selectionState = SelectingEnd;
-        statusBar()->showMessage("Start vertex selected. Please select the end vertex.");
+        statusBar()->showMessage(QString("Start vertex selected ID: %1. Please select the end vertex.").arg(vertex->id));
     } 
     else if (selectionState == SelectingEnd) {
         endVertex = vertex;
@@ -120,14 +139,33 @@ void MainWindow::onVertexSelected(Vertex* vertex) {
                 // Highlight the path
                 graphScene->highlightPath(path);
 
-                statusBar()->showMessage(QString("Path found in %1 microseconds").arg(elapsedMicroseconds));
+                // Compute the total path length
+                double totalLength = 0.0;
+                for (size_t i = 0; i < path.size() - 1; ++i) {
+                    Vertex* current = path[i];
+                    Vertex* next = path[i + 1];
+                    // Find the edge between current and next
+                    Edge* edge = nullptr;
+                    for (Edge* e : current->edges) {
+                        if (e->destination == next) {
+                            edge = e;
+                            break;
+                        }
+                    }
+                    if (edge) {
+                        totalLength += edge->length;
+                    }
+                }
+
+                statusBar()->showMessage(QString("Path found in %1 us | Total length: %2").arg(elapsedMicroseconds).arg(totalLength));
 
                 // Output the time and path to the debug console
-                qDebug() << "Path found in" << elapsedMicroseconds << "microseconds.";
+                qDebug() << "Path found in" << elapsedMicroseconds << "us.";
                 qDebug() << "Path:";
                 for (Vertex* v : path) {
                     qDebug() << "Vertex ID:" << v->id;
                 }
+                qDebug() << "Total length:" << totalLength;
             }
             delete algorithm;
         }
@@ -136,8 +174,8 @@ void MainWindow::onVertexSelected(Vertex* vertex) {
 
 void MainWindow::enterVertexIDs() {
     bool ok1, ok2;
-    int startID = QInputDialog::getInt(this, "Enter Start Vertex ID", "Start Vertex ID:", 0, 0, 100000, 1, &ok1);
-    int endID = QInputDialog::getInt(this, "Enter End Vertex ID", "End Vertex ID:", 0, 0, 100000, 1, &ok2);
+    int startID = QInputDialog::getInt(this, "Enter Start Vertex ID", "Start Vertex ID:", 0, 0, 1000000, 1, &ok1);
+    int endID = QInputDialog::getInt(this, "Enter End Vertex ID", "End Vertex ID:", 0, 0, 1000000, 1, &ok2);
 
     if (ok1 && ok2) {
         if (graph.vertices.count(startID) && graph.vertices.count(endID)) {
@@ -146,10 +184,9 @@ void MainWindow::enterVertexIDs() {
 
             graphScene->clearSelection();
             graphScene->setStartVertex(startVertex);
-            graphScene->setEndVertex(endVertex);
+            selectionState = SelectingEnd;
+            onVertexSelected(endVertex);
 
-            // Start pathfinding
-            onVertexSelected(endVertex); // Trigger pathfinding
         } else {
             QMessageBox::warning(this, "Invalid IDs", "One or both vertex IDs are invalid.");
         }

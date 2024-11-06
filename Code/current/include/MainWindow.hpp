@@ -18,6 +18,7 @@ private slots:
     void selectAlgorithm();
     void enterVertexIDs();
     void resetSelection();
+    void toggleAntialiasing(bool enabled);
 
 private:
     GraphView* graphicsView;

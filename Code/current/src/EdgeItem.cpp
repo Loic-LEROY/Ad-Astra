@@ -1,6 +1,7 @@
 #include "EdgeItem.hpp"
 #include "Vertex.hpp"
 #include <QPen>
+#include <qpainter.h>
 
 EdgeItem::EdgeItem(Edge* edge)
     : edge(edge) {
@@ -11,3 +12,4 @@ EdgeItem::EdgeItem(Edge* edge)
 Edge* EdgeItem::getEdge() const {
     return edge;
 }
+

@@ -1,15 +1,19 @@
 #include "GraphView.hpp"
 #include <QWheelEvent>
 #include <QtMath>
+#include <QOpenGLWidget>
 
 GraphView::GraphView(QWidget* parent)
     : QGraphicsView(parent) {
+    // setCursor(Qt::ArrowCursor);
     setRenderHint(QPainter::Antialiasing);
     setDragMode(QGraphicsView::ScrollHandDrag);
-    setViewportUpdateMode(QGraphicsView::BoundingRectViewportUpdate);
     setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
     setResizeAnchor(QGraphicsView::AnchorUnderMouse);
     setInteractive(true);
+    setStyleSheet("background-color: #232426;");
+    //setViewport(new QOpenGLWidget());
+    //setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
 }
 
 void GraphView::wheelEvent(QWheelEvent* event) {

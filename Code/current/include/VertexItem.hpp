@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QGraphicsEllipseItem>
 #include "Vertex.hpp"
+#include <QPainter>
+#include <QStyleOptionGraphicsItem>
 
 class VertexItem : public QObject, public QGraphicsEllipseItem {
     Q_OBJECT
@@ -22,6 +24,9 @@ public:
 
     void setState(VertexState state);
     VertexState getState() const;
+
+    // Override the paint method
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = nullptr) override;
 
 signals:
     void vertexClicked(Vertex* vertex);
