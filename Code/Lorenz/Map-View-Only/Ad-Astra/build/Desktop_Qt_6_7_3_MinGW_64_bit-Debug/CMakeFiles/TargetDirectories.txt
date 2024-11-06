@@ -1,5 +1,0 @@
-C:/Users/cazau/OneDrive/Documents/Ad-Astra/build/Desktop_Qt_6_7_3_MinGW_64_bit-Debug/CMakeFiles/ad-astra.dir
-C:/Users/cazau/OneDrive/Documents/Ad-Astra/build/Desktop_Qt_6_7_3_MinGW_64_bit-Debug/CMakeFiles/edit_cache.dir
-C:/Users/cazau/OneDrive/Documents/Ad-Astra/build/Desktop_Qt_6_7_3_MinGW_64_bit-Debug/CMakeFiles/rebuild_cache.dir
-C:/Users/cazau/OneDrive/Documents/Ad-Astra/build/Desktop_Qt_6_7_3_MinGW_64_bit-Debug/CMakeFiles/ad-astra_autogen_timestamp_deps.dir
-C:/Users/cazau/OneDrive/Documents/Ad-Astra/build/Desktop_Qt_6_7_3_MinGW_64_bit-Debug/CMakeFiles/ad-astra_autogen.dir
